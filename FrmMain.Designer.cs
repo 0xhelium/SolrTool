@@ -39,13 +39,14 @@
             this.SplitCtn = new System.Windows.Forms.SplitContainer();
             this.SplitCtnFiles = new System.Windows.Forms.SplitContainer();
             this.tree = new System.Windows.Forms.TreeView();
+            this.TextBoxFileContent = new System.Windows.Forms.RichTextBox();
+            this.LinkLblCopy = new System.Windows.Forms.LinkLabel();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.BtnExportAllFiles = new System.Windows.Forms.Button();
             this.BtnUpdateCurrentFile = new System.Windows.Forms.Button();
             this.BtnReoload = new System.Windows.Forms.Button();
             this.BtnUploadConfig = new System.Windows.Forms.Button();
-            this.LinkLblCopy = new System.Windows.Forms.LinkLabel();
-            this.TextBoxFileContent = new System.Windows.Forms.RichTextBox();
+            this.BtnExportAllCollections = new System.Windows.Forms.Button();
             this.StatusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitCtn)).BeginInit();
             this.SplitCtn.Panel1.SuspendLayout();
@@ -165,6 +166,26 @@
             this.tree.Size = new System.Drawing.Size(242, 446);
             this.tree.TabIndex = 0;
             // 
+            // TextBoxFileContent
+            // 
+            this.TextBoxFileContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TextBoxFileContent.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TextBoxFileContent.Location = new System.Drawing.Point(0, 0);
+            this.TextBoxFileContent.Name = "TextBoxFileContent";
+            this.TextBoxFileContent.Size = new System.Drawing.Size(650, 427);
+            this.TextBoxFileContent.TabIndex = 6;
+            this.TextBoxFileContent.Text = "";
+            // 
+            // LinkLblCopy
+            // 
+            this.LinkLblCopy.AutoSize = true;
+            this.LinkLblCopy.Location = new System.Drawing.Point(4, 430);
+            this.LinkLblCopy.Name = "LinkLblCopy";
+            this.LinkLblCopy.Size = new System.Drawing.Size(29, 12);
+            this.LinkLblCopy.TabIndex = 6;
+            this.LinkLblCopy.TabStop = true;
+            this.LinkLblCopy.Text = "COPY";
+            // 
             // imageList
             // 
             this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
@@ -173,16 +194,16 @@
             // 
             // BtnExportAllFiles
             // 
-            this.BtnExportAllFiles.Location = new System.Drawing.Point(15, 118);
+            this.BtnExportAllFiles.Location = new System.Drawing.Point(15, 142);
             this.BtnExportAllFiles.Name = "BtnExportAllFiles";
             this.BtnExportAllFiles.Size = new System.Drawing.Size(245, 23);
             this.BtnExportAllFiles.TabIndex = 5;
-            this.BtnExportAllFiles.Text = "导出全部文件";
+            this.BtnExportAllFiles.Text = "导出当前配置文件";
             this.BtnExportAllFiles.UseVisualStyleBackColor = true;
             // 
             // BtnUpdateCurrentFile
             // 
-            this.BtnUpdateCurrentFile.Location = new System.Drawing.Point(15, 147);
+            this.BtnUpdateCurrentFile.Location = new System.Drawing.Point(15, 171);
             this.BtnUpdateCurrentFile.Name = "BtnUpdateCurrentFile";
             this.BtnUpdateCurrentFile.Size = new System.Drawing.Size(245, 23);
             this.BtnUpdateCurrentFile.TabIndex = 5;
@@ -200,32 +221,21 @@
             // 
             // BtnUploadConfig
             // 
-            this.BtnUploadConfig.Location = new System.Drawing.Point(15, 176);
+            this.BtnUploadConfig.Location = new System.Drawing.Point(15, 200);
             this.BtnUploadConfig.Name = "BtnUploadConfig";
             this.BtnUploadConfig.Size = new System.Drawing.Size(245, 23);
             this.BtnUploadConfig.TabIndex = 5;
             this.BtnUploadConfig.Text = "新增配置";
             this.BtnUploadConfig.UseVisualStyleBackColor = true;
             // 
-            // LinkLblCopy
+            // BtnExportAllCollections
             // 
-            this.LinkLblCopy.AutoSize = true;
-            this.LinkLblCopy.Location = new System.Drawing.Point(4, 430);
-            this.LinkLblCopy.Name = "LinkLblCopy";
-            this.LinkLblCopy.Size = new System.Drawing.Size(29, 12);
-            this.LinkLblCopy.TabIndex = 6;
-            this.LinkLblCopy.TabStop = true;
-            this.LinkLblCopy.Text = "COPY";
-            // 
-            // TextBoxFileContent
-            // 
-            this.TextBoxFileContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TextBoxFileContent.Dock = System.Windows.Forms.DockStyle.Top;
-            this.TextBoxFileContent.Location = new System.Drawing.Point(0, 0);
-            this.TextBoxFileContent.Name = "TextBoxFileContent";
-            this.TextBoxFileContent.Size = new System.Drawing.Size(650, 427);
-            this.TextBoxFileContent.TabIndex = 6;
-            this.TextBoxFileContent.Text = "";
+            this.BtnExportAllCollections.Location = new System.Drawing.Point(15, 113);
+            this.BtnExportAllCollections.Name = "BtnExportAllCollections";
+            this.BtnExportAllCollections.Size = new System.Drawing.Size(245, 23);
+            this.BtnExportAllCollections.TabIndex = 5;
+            this.BtnExportAllCollections.Text = "导出全部配置文件";
+            this.BtnExportAllCollections.UseVisualStyleBackColor = true;
             // 
             // FrmMain
             // 
@@ -235,6 +245,7 @@
             this.Controls.Add(this.BtnUploadConfig);
             this.Controls.Add(this.BtnUpdateCurrentFile);
             this.Controls.Add(this.BtnReoload);
+            this.Controls.Add(this.BtnExportAllCollections);
             this.Controls.Add(this.BtnExportAllFiles);
             this.Controls.Add(this.SplitCtn);
             this.Controls.Add(this.lblSolrCollection);
@@ -282,6 +293,7 @@
         private System.Windows.Forms.Button BtnUploadConfig;
         private System.Windows.Forms.LinkLabel LinkLblCopy;
         private System.Windows.Forms.RichTextBox TextBoxFileContent;
+        private System.Windows.Forms.Button BtnExportAllCollections;
     }
 }
 

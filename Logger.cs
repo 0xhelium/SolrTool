@@ -112,7 +112,7 @@ namespace SolrTool
 
             var c = 0;
             var r = true;
-            while (c++ < 10 && r)
+            while (c++ < 20 && r)
             {
                 r = _bufferedLogs.TryDequeue(out var log);
                 log = r ? log : "";

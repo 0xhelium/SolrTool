@@ -1,4 +1,4 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
+﻿using Ionic.Zip;
 using Renci.SshNet;
 using SolrTool.Models;
 using SolrTool.Models.SolrModels;
@@ -44,7 +44,7 @@ namespace SolrTool
             logger = Logger.Create(LogType.INFO);
             scrollLog = ScrollLog.Create(logger.LogPath);
             timer = new Timer();
-            timer.Interval = 50;
+            timer.Interval = 10;
 
 
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -159,9 +159,31 @@ namespace SolrTool
             BtnExportAllFiles.Click += async (s, e) =>
             {
                 BtnExportAllFiles.Enabled = false;
-                var path = await ExportAllFiles();
-                Process.Start("explorer.exe", path);
+                var path = await ExportAllFiles(ComboSolrCollection.Items[ComboSolrCollection.SelectedIndex].ToString());
                 BtnExportAllFiles.Enabled = true;
+
+                var psi = new ProcessStartInfo("cmd.exe", $"/c \"explorer.exe {path}\"");
+                psi.CreateNoWindow = true;
+                Process.Start(psi);
+            };
+
+            BtnExportAllCollections.Click += async (s, e) =>
+            {
+                BtnExportAllCollections.Enabled = false;
+
+                var path = "";
+                ComboSolrCollection.SelectedIndex = 0;
+                foreach (var item in ComboSolrCollection.Items)
+                {
+                    path = await ExportAllFiles(item.ToString());
+                }
+                var configPath = new DirectoryInfo(path).Parent.FullName;
+
+                BtnExportAllCollections.Enabled = true;
+
+                var psi = new ProcessStartInfo("cmd.exe", $"/c \"explorer.exe {configPath}\"");
+                psi.CreateNoWindow = true;
+                Process.Start(psi);
             };
 
             //文件更新
@@ -198,7 +220,8 @@ namespace SolrTool
             };
 
             //创建配置
-            BtnUploadConfig.Click += async (s, e) => {
+            BtnUploadConfig.Click += async (s, e) =>
+            {
                 BtnUploadConfig.Enabled = false;
                 string confName = "", confFolder = "";
                 var frm = new FrmConfigUploadBox();
@@ -219,7 +242,6 @@ namespace SolrTool
 
                     if (Directory.Exists(confFolder))
                     {
-                        var zip = new FastZip();
                         var tmpDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp");
                         if (!Directory.Exists(tmpDir))
                         {
@@ -227,7 +249,11 @@ namespace SolrTool
                         }
 
                         var file = Path.Combine(tmpDir, Guid.NewGuid().ToString("N") + ".zip");
-                        zip.CreateZip(file, confFolder, true, "");
+                        using (var zip = new ZipFile())
+                        {
+                            zip.AddDirectory(confFolder);
+                            zip.Save(file);
+                        }
                         await SolrHttpOperation.CreateConfig(confName, file);
                     }
                 }
@@ -362,17 +388,21 @@ namespace SolrTool
         }
 
 
-        private async Task<string> ExportAllFiles()
+        private async Task<string> ExportAllFiles(string indexName)
         {
             StatusStripLabel.Text = "Export Files...";
-            var exportPath = Path.Combine(AppGlobalConfigs.BaseDirectory, "export", "configs", ComboSolrCollection.Items[ComboSolrCollection.SelectedIndex].ToString());
+            var tmp = System.Environment.GetEnvironmentVariable("TEMP") ?? "";
+            logger.Log("get system tempory folder");
+            logger.Log($"tempory folder:{tmp}");
+            var exportPath = Path.Combine(tmp.Length > 0 ? tmp : AppGlobalConfigs.BaseDirectory, "export", "configs", indexName);
+            logger.Log($"export path folder:{exportPath}");
             if (!Directory.Exists(exportPath))
             {
                 Directory.CreateDirectory(exportPath);
             }
 
             await GetAllNodes(tree.Nodes, exportPath);
-            
+
             StatusStripLabel.Text = "finished";
             return exportPath;
         }

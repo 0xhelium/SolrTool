@@ -31,7 +31,7 @@ namespace SolrTool
             Action<object, SolrHttpClientEventArgs> requestComplete = (s, e) =>
             {
                 var url = e.RequestMessage.RequestUri.ToString();
-                logger.Log($"finished request url:[{url}], response content length: [{e.ResponseMsg.Content.ReadAsStringAsync().Result.Length}]");
+                logger.Log($"finished request url:[{url}], response content: [{e.ResponseMsg.Content.ReadAsStringAsync().Result}]");
             };
 
             _client = new Lazy<HttpClient>(() => {
@@ -87,8 +87,13 @@ namespace SolrTool
                 throw new IOException($"file:[{fileName}] not found");
             }
 
-            var sc = new ByteArrayContent(File.ReadAllBytes(fileName));
+            //var sc = new ByteArrayContent(File.ReadAllBytes(fileName));
+            var ms = new MemoryStream(File.ReadAllBytes(fileName));
+            var sc = new StreamContent(ms);
+            sc.Headers.Add("Content-Type", "application/octet-stream");
             var resp = await client.PostAsync(string.Format(SolrGlobalConfigs.UPLOAD_FILE, name), sc);
+            ms.Close();
+            ms.Dispose();
             return resp.Content.ReadAsStringAsync().Result;
         }
 
