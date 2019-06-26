@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+  <server>
+    <addr>
+      <ip></ip>
+      <port></port>
+    </addr>
+    <auth>
+      <username>root</username>
+      <password>zqzy_1234</password>
+    </auth>
+  </server>
+  <solr>
+    <baseUrl>http://192.168.1.72:8090</baseUrl>
+    <!--是否单机, 1 true 0 false-->
+    <singleNode>1</singleNode>
+    <auth>
+      <username>fjsolr</username>
+      <password>fjxh.solr</password>
+    </auth>
+  </solr>
+  <zookeeper>
+    <binPath>/home/Zookeeper/zookeeper-3.4.10/bin/</binPath>
+    <cliPort>2182</cliPort>
+    <configPath>/configs/</configPath>
+  </zookeeper>
+</doc>
