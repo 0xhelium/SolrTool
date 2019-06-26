@@ -7,16 +7,16 @@
     </addr>
     <auth>
       <username>root</username>
-      <password>zqzy_1234</password>
+      <password></password>
     </auth>
   </server>
   <solr>
-    <baseUrl>http://192.168.1.72:8090</baseUrl>
+    <baseUrl></baseUrl>
     <!--是否单机, 1 true 0 false-->
     <singleNode>1</singleNode>
     <auth>
-      <username>fjsolr</username>
-      <password>fjxh.solr</password>
+      <username></username>
+      <password></password>
     </auth>
   </solr>
   <zookeeper>
